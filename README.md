@@ -1,40 +1,78 @@
-# Spootify Coding Challenge 🎧 &nbsp; ![hard](https://img.shields.io/badge/-Hard-red) ![time](https://img.shields.io/badge/%E2%8F%B0-60m-blue)
+# ReactJS demo application to display Spotify data
 
-&nbsp;
-# Goals/Outcomes ✨
-- To test knowledge of consuming APIs and handling responses
-- Loading state and knowing where and how to make multiple API calls efficiently
+## Requirements
 
-&nbsp;
-# Pre-requisites ✅
-- Add your Spotify client ID & secret to a `.env` file in root using the environment variables `REACT_APP_SPOTIFY_CLIENT_ID` and `REACT_APP_SPOTIFY_CLIENT_SECRET`
-  - Note. **Never add this type of config to version control. This would usually come from your build server.**
-
-&nbsp;
-# Requirements 📖
-- Fetch and display *Released This Week* songs
-  - Use the API path `new-releases`
-- Fetch and display *Featured Playlists*
-  - Use the API path `featured-playlists`
-- Fetch and display *Browse* genres
-  - Use the API path `categories`
-- Loading state/UI *(optional, current UX is already clean)*
-
-&nbsp;
-# Think about 💡
-- Taking a look at the Spotify API documentation
-- Do you resolve each API request one after the other or in parallel?
-- Where do you make the API requests?
-- How much logic do you offload out of the UI components?
-
-&nbsp;
-# What's Already Been Done 🏁
-- UI/UX for all elements, including previews (mobile responsive)
-
-&nbsp;
-# Screenshots 🌄
-&nbsp;
-![screenshot-desktop](https://puu.sh/GwPLE/3be580156a.png)
-<img alt="screenshot-mobile" width=400 src="https://puu.sh/GwPLS/0bcb566d23.png" />
+- [Spotify API credentials](https://developer.spotify.com/console/)
+- ReactJS
+- Node.js
+- NPM
 
 ## Installation
+
+### Clone this repository
+
+```
+$ git clone https://github.com/zamronypj/envision-spootify.git
+```
+
+### Install dependencies
+This application consists of server and client. Run `npm install` separately for each of them.
+
+Install dependencies for client application
+```
+$ cd envision-spootify/client
+$ npm install
+```
+
+Install dependencies for server application
+```
+$ cd envision-spootify/server
+$ npm install
+```
+
+## Setup configuration
+
+## For server
+Set environment variable for Spotify API client ID, client secret key and redirect URI
+
+```
+$ export REACT_APP_SPOTIFY_CLIENT_ID="your spotify client id"
+$ export REACT_APP_SPOTIFY_CLIENT_SECRET="your spotify client secret"
+$ export REACT_APP_SPOTIFY_REDIRECT_URI="your spotify redirect uri"
+```
+You need to make sure that redirect URI matched whitelisted redirect URI set in your Spotify API developer dashboard. So if you set `REACT_APP_SPOTIFY_REDIRECT_URI` to `http://localhost:3000/`, in Spotify API dashboard, you need to whitelist in *Edit Settings*.
+
+### For client
+
+Copy configuration file
+
+```
+$ cp config.js.example config.js
+```
+Edit Spotify API client ID and redirect URI to match your own.
+
+Client application run on browser so NEVER store your client secret.
+
+## Run application
+
+For client
+
+```
+$ cd envision-spootify/client
+$ npm start
+```
+
+For server
+
+```
+$ cd envision-spootify/server
+$ npm start
+```
+
+By default it will run in `http://localhost:3000`.
+
+## Screenshots
+&nbsp;
+![screenshot-desktop](screenshot-desktop.png)
+<img alt="screenshot-mobile" width=400 src="screenshot-mobile.png" />
+
