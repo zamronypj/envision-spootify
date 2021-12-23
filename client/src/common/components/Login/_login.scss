@@ -1,0 +1,15 @@
+@import '../../../styles/vars';
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    div {
+        padding:1.2em;
+        a {
+            font-size:1.25em;
+        }
+
+    }
+}

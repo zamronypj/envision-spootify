@@ -1,19 +1,16 @@
 import React from 'react';
-import Header from '../components/Header';
-import SideBar from '../components/SideBar';
-import Player from '../components/Player';
+import Dashboard from '../components/Dashboard';
+import Login from '../components/Login';
+import './_corelayout.scss';
+
+// Url - http://localhost:3000/?code=accessTokenCode
+// This will get url string after the '?' & .get() will get the code value from the url
+const code = new URLSearchParams(window.location.search).get('code')
 
 function CoreLayout({ children , history }) {
   return (
-    <div className="main">
-      <SideBar />
-      <div className="main__content">
-        <Header history={history} />
-        <div className="main__content__child">
-          {children}
-        </div>
-      </div>
-      <Player />
+    <div className="core-layout">
+        {code ? <Dashboard code={code} children={children} /> : <Login />}
     </div>
   );
 }

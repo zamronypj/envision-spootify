@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import DiscoverBlock from './DiscoverBlock/components/DiscoverBlock';
 import '../styles/_discover.scss';
-import spotifyApi from '../../../services/spotify';
+import SpotifyWebApi from "spotify-web-api-node";
+import config from '../../../config'
+
+const spotifyApi = new SpotifyWebApi({
+  clientId: config.api.clientId
+});
 
 export default class Discover extends Component {
   constructor() {
@@ -18,16 +23,18 @@ export default class Discover extends Component {
     this.getNewReleases();
   }
 
+
   getNewReleases() {
-    spotifyApi.getNewReleases({ limit : 5, offset: 0, country: 'SE' })
-    .then(function(data) {
-        console.log(data.body);
-        this.setState({
-          newReleases : data.body
+      spotifyApi.setAccessToken( this.props.accessToken);
+      spotifyApi.getNewReleases({ limit : 5, offset: 0, country: 'SE' })
+      .then(function(data) {
+          console.log(data.body);
+          this.setState({
+            newReleases : data.body
+          });
+        }, function(err) {
+           console.log("Something went wrong!", err);
         });
-      }, function(err) {
-         console.log("Something went wrong!", err);
-      });
   }
 
 
