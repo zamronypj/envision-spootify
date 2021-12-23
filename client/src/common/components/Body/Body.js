@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { AccessTokenProvider } from '../../context/AccessTokenContext'
 
 function Body({ accessToken, children }) {
