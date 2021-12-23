@@ -1,4 +1,6 @@
-# ReactJS demo application to display Spotify data
+# Spootify
+
+ReactJS demo application to display Spotify data
 
 ## Requirements
 
