@@ -9,9 +9,9 @@ const code = new URLSearchParams(window.location.search).get('code')
 
 function CoreLayout({ children , history }) {
   return (
-    <div className="core-layout">
+    <>
         {code ? <Dashboard code={code} children={children} /> : <Login />}
-    </div>
+    </>
   );
 }
 
