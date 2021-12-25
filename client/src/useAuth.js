@@ -1,3 +1,9 @@
+/**
+ * authenticate user with Spotify API
+ *
+ * @credit: https://github.com/dipscoder/spotify-clone.git
+ */
+
 import { useEffect, useState } from "react";
 import axios from "./axios";
 
@@ -23,7 +29,7 @@ export default function useAuth(code) {
       });
   }, [code]);
 
-  
+
   // Update 'accessToken' with the help of 'refreshToken' when 'expireIn' time expires
   // Because of this user doesnot have to reLogin after(in this case 3600s = 1hr) its accessToken expires because below code will updates accessToken
   useEffect(() => {
@@ -32,7 +38,7 @@ export default function useAuth(code) {
     }
 
     let interval = setInterval(() => {
-      
+
       axios
       .post("/refresh", { refreshToken })
       .then((response) => {

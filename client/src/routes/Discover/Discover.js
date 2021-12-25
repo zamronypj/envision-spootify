@@ -1,13 +1,8 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react'
 import DiscoverBlock from './DiscoverBlock'
-import SpotifyWebApi from 'spotify-web-api-node'
-import config from '../../config'
+import spotifyApi from '../../common/services/SpotifyApi'
 import { AccessTokenContext } from '../../common/context/AccessTokenContext'
 import './_discover.scss'
-
-const spotifyApi = new SpotifyWebApi({
-  clientId: config.api.clientId,
-})
 
 function Discover() {
     const [newReleases, setNewReleases] = useState([])

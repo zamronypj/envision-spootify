@@ -1,14 +1,9 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react'
 import SearchInput from './components/SearchInput'
 import SearchResult from './components/SearchResult'
-import SpotifyWebApi from 'spotify-web-api-node'
-import config from '../../config'
+import spotifyApi from '../../common/services/SpotifyApi'
 import { AccessTokenContext } from '../../common/context/AccessTokenContext'
 import './_search.scss'
-
-const spotifyApi = new SpotifyWebApi({
-  clientId: config.api.clientId,
-})
 
 function Search() {
     const [keyword, setKeyword] = useState('')
