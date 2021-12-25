@@ -11,7 +11,7 @@ const spotifyApi = new SpotifyWebApi({
 })
 
 function Search() {
-    const [keyword, setKeyword] = useState()
+    const [keyword, setKeyword] = useState('')
     const [searchResults, setSearchResults] = useState([])
 
     const accessToken = useContext(AccessTokenContext)
