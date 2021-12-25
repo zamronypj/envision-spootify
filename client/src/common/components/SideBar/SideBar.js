@@ -9,13 +9,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { ReactComponent as Avatar } from '../../../assets/images/avatar.svg'
 import {Link, useLocation } from 'react-router-dom'
-import SpotifyWebApi from "spotify-web-api-node"
-import config from "../../../config"
+import spotifyApi from '../../services/SpotifyApi'
 import './_sidebar.scss';
-
-const spotifyApi = new SpotifyWebApi({
-  clientId: config.api.clientId,
-});
 
 function renderSideBarOption(link, icon, text, { selected } = {}) {
   return (
