@@ -9,7 +9,7 @@ function Login() {
     <div className="main">
         <div className="login-page">
             <div>
-                <img src={Logo} width="400" />
+                <img src={Logo} width="400" alt="Logo"/>
             </div>
             <div>
               <a href={config.api.authUrl}>

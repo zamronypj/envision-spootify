@@ -1,7 +1,13 @@
-import React from 'react';
-import Discover from './Discover';
+import React from 'react'
+import Discover from './Discover'
+import Search from './Search'
+import { Routes, Route } from 'react-router-dom'
 
-export default function Routes() {
-  // Here you'd return an array of routes
-  return <Discover />;
+export default function AppRoutes() {
+    return (
+        <Routes>
+            <Route exact path='/' element={< Discover />} />
+            <Route exact path='/search' element={< Search />} />
+        </Routes>
+    );
 }

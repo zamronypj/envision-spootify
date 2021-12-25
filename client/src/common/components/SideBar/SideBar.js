@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import cx from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -6,11 +6,12 @@ import {
   faHeart,
   faPlayCircle,
   faSearch, faStream,
-} from '@fortawesome/free-solid-svg-icons';
-import { ReactComponent as Avatar } from '../../../assets/images/avatar.svg';
-import './_sidebar.scss';
-import SpotifyWebApi from "spotify-web-api-node";
+} from '@fortawesome/free-solid-svg-icons'
+import { ReactComponent as Avatar } from '../../../assets/images/avatar.svg'
+import {Link } from 'react-router-dom'
+import SpotifyWebApi from "spotify-web-api-node"
 import config from "../../../config"
+import './_sidebar.scss';
 
 const spotifyApi = new SpotifyWebApi({
   clientId: config.api.clientId,
@@ -21,8 +22,10 @@ function renderSideBarOption(link, icon, text, { selected } = {}) {
     <div
         className={cx('sidebar__option', { 'sidebar__option--selected': selected })}
     >
-      <FontAwesomeIcon icon={icon} />
-      <p>{text}</p>
+      <Link to={link}>
+          <FontAwesomeIcon icon={icon} />
+          <p>{text}</p>
+      </Link>
     </div>
   )
 }
@@ -33,7 +36,7 @@ export default function SideBar({ accessToken }) {
       images: [],
     });
 
-    useEffect(() => {
+    const loadMe = useCallback(() => {
         if (!accessToken) return;
 
         spotifyApi.setAccessToken(accessToken);
@@ -41,8 +44,12 @@ export default function SideBar({ accessToken }) {
         //Get user details with help of accessToken
         spotifyApi.getMe().then(data => {
             setUser(data.body)
-         })
+        })
     }, [accessToken]);
+
+    useEffect(() => {
+        loadMe()
+    }, [loadMe]);
 
     return (
         <div className="sidebar">

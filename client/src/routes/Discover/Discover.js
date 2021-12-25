@@ -16,6 +16,10 @@ function Discover() {
 
     const accessToken = useContext(AccessTokenContext)
 
+    /**
+     * load new release using useCallback() hook to avoid
+     * multiple endpoint calls
+     */
     const loadNewRelease = useCallback(() => {
         if (!accessToken) return;
 
@@ -47,8 +51,13 @@ function Discover() {
     }, [accessToken])
 
 
-    const loadCategories = useCallback(() => {
+    /**
+     * load categories using useCallback() hook to avoid
+     * multiple endpoint calls
+     */
+     const loadCategories = useCallback(() => {
         if (!accessToken) return;
+
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.getCategories({
             limit : 5,
