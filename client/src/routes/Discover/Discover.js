@@ -23,7 +23,7 @@ function Discover() {
         spotifyApi.getNewReleases({
             limit : 5,
             offset: 0,
-            country: 'SE'
+            country: 'ID',
         }).then(function(data) {
             setNewReleases(data.body.albums.items);
         }, function(err) {
@@ -38,7 +38,7 @@ function Discover() {
         spotifyApi.getFeaturedPlaylists({
             limit : 5,
             offset: 0,
-            country: 'SE'
+            country : 'ID'
         }).then(function(data) {
             setPlaylists(data.body.playlists.items);
         }, function(err) {
@@ -53,7 +53,7 @@ function Discover() {
         spotifyApi.getCategories({
             limit : 5,
             offset: 0,
-            country: 'SE'
+            country: 'ID'
         }).then(function(data) {
             setCategories(data.body.categories.items);
         }, function(err) {
