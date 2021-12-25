@@ -1,15 +1,18 @@
 @import '../../../styles/vars';
 
-.login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.main {
+    .login-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-direction: column;
+        div {
+            padding:1.2em;
+            a {
+                font-size:1.25em;
+            }
 
-    div {
-        padding:1.2em;
-        a {
-            font-size:1.25em;
         }
-
     }
 }

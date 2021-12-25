@@ -1,3 +1,8 @@
+/**
+ * Server application which does auth
+ *
+ * @credit: https://github.com/dipscoder/spotify-clone.git
+ */
 const express = require('express')
 const cors = require('cors')
 const spotifyWebApi = require('spotify-web-api-node')

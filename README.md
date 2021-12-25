@@ -78,3 +78,13 @@ By default it will run in `http://localhost:3000`.
 ![screenshot-desktop](screenshot-desktop.png)
 <img alt="screenshot-mobile" width=400 src="screenshot-mobile.png" />
 
+## Copyright Notice and Credit
+
+Server part is modified version of
+
+https://github.com/dipscoder/spotify-clone.git
+
+
+Client part is modified  version of
+
+https://github.com/alexgurr/react-coding-challenges/tree/master/spootify

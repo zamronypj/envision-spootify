@@ -1,6 +1,6 @@
 import React from 'react';
 import config from '../../../config'
-import { ReactComponent as Hero } from '../../../assets/images/hero.svg';
+import Logo from '../../../assets/images/hero.svg';
 
 import './_login.scss'
 
@@ -8,7 +8,9 @@ function Login() {
   return (
     <div className="main">
         <div className="login-page">
-            <Hero />
+            <div>
+                <img src={Logo} width="400" />
+            </div>
             <div>
               <a href={config.api.authUrl}>
                   Login with Spotify

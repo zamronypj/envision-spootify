@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useCallback } from 'react'
 import DiscoverBlock from './DiscoverBlock'
 import SpotifyWebApi from 'spotify-web-api-node'
 import config from '../../config'
@@ -13,9 +13,10 @@ function Discover() {
     const [newReleases, setNewReleases] = useState([])
     const [playlists, setPlaylists] = useState([])
     const [categories, setCategories] = useState([])
+
     const accessToken = useContext(AccessTokenContext)
 
-    useEffect(() => {
+    const loadNewRelease = useCallback(() => {
         if (!accessToken) return;
 
         spotifyApi.setAccessToken(accessToken);
@@ -28,9 +29,9 @@ function Discover() {
         }, function(err) {
             console.log("Something went wrong!", err);
         });
-    }, [accessToken])
+    }, [accessToken]);
 
-    useEffect(() => {
+    const loadPlaylists = useCallback(() => {
         if (!accessToken) return;
 
         spotifyApi.setAccessToken(accessToken);
@@ -45,9 +46,9 @@ function Discover() {
         });
     }, [accessToken])
 
-    useEffect(() => {
-        if (!accessToken) return;
 
+    const loadCategories = useCallback(() => {
+        if (!accessToken) return;
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.getCategories({
             limit : 5,
@@ -58,7 +59,19 @@ function Discover() {
         }, function(err) {
             console.log("Something went wrong!", err);
         });
-    })
+    }, [accessToken])
+
+    useEffect(() => {
+        loadNewRelease();
+    }, [loadNewRelease])
+
+    useEffect(() => {
+        loadPlaylists()
+    }, [loadPlaylists])
+
+    useEffect(() => {
+        loadCategories()
+    }, [loadCategories])
 
     return (
         <div className="discover">
