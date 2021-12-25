@@ -8,7 +8,7 @@ import {
   faSearch, faStream,
 } from '@fortawesome/free-solid-svg-icons'
 import { ReactComponent as Avatar } from '../../../assets/images/avatar.svg'
-import {Link } from 'react-router-dom'
+import {Link, useLocation } from 'react-router-dom'
 import SpotifyWebApi from "spotify-web-api-node"
 import config from "../../../config"
 import './_sidebar.scss';
@@ -19,18 +19,20 @@ const spotifyApi = new SpotifyWebApi({
 
 function renderSideBarOption(link, icon, text, { selected } = {}) {
   return (
-    <div
-        className={cx('sidebar__option', { 'sidebar__option--selected': selected })}
-    >
-      <Link to={link}>
-          <FontAwesomeIcon icon={icon} />
-          <p>{text}</p>
-      </Link>
-    </div>
+    <Link to={link}>
+      <div
+          className={cx('sidebar__option', { 'sidebar__option--selected': selected })}
+      >
+            <FontAwesomeIcon icon={icon} />
+            <p>{text}</p>
+      </div>
+    </Link>
   )
 }
 
 export default function SideBar({ accessToken }) {
+    const location = useLocation();
+
     const [user, setUser] = useState({
       display_name: "",
       images: [],
@@ -58,11 +60,11 @@ export default function SideBar({ accessToken }) {
               <p>{user?.display_name}</p>
             </div>
             <div className="sidebar__options">
-              {renderSideBarOption('/', faHeadphonesAlt, 'Discover', { selected: true })}
-              {renderSideBarOption('/search', faSearch, 'Search')}
-              {renderSideBarOption('/favourites', faHeart, 'Favourites')}
-              {renderSideBarOption('/playlists', faPlayCircle, 'Playlists')}
-              {renderSideBarOption('/charts', faStream, 'Charts')}
+              {renderSideBarOption('/', faHeadphonesAlt, 'Discover', { selected: (location.pathname === '/') })}
+              {renderSideBarOption('/search', faSearch, 'Search', { selected: (location.pathname === '/search') })}
+              {renderSideBarOption('/favourites', faHeart, 'Favourites', { selected: (location.pathname === '/favourites') })}
+              {renderSideBarOption('/playlists', faPlayCircle, 'Playlists', { selected: (location.pathname === '/playlists') })}
+              {renderSideBarOption('/charts', faStream, 'Charts', { selected: (location.pathname === '/charts') })}
             </div>
         </div>
     );
