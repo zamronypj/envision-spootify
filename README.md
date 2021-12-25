@@ -74,9 +74,14 @@ $ npm start
 By default it will run in `http://localhost:3000`.
 
 ## Screenshots
-&nbsp;
+Home page
 ![screenshot-desktop](screenshot-desktop.png)
 <img alt="screenshot-mobile" width=400 src="screenshot-mobile.png" />
+
+Search page
+
+![screenshot-desktop-search](screenshot-desktop-search.png)
+<img alt="screenshot-mobile-search" width=400 src="screenshot-mobile-search.png" />
 
 ## Copyright Notice and Credit
 
