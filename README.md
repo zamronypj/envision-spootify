@@ -6,8 +6,8 @@ ReactJS demo application to display Spotify data
 
 - [Spotify API credentials](https://developer.spotify.com/console/)
 - ReactJS
-- Node.js
-- NPM
+- Node.js >= 15.0.0
+- NPM >= 8.1.2
 
 ## Installation
 
