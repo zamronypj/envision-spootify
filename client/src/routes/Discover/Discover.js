@@ -25,11 +25,7 @@ function Discover() {
         if (!accessToken || !isMounted) return;
 
         spotifyApi.setAccessToken(accessToken);
-        spotifyApi.getNewReleases({
-            limit : 5,
-            offset: 0,
-            country: 'ID',
-        }).then(function(data) {
+        spotifyApi.getNewReleases().then(function(data) {
             if (isMounted) {
                 setNewReleases(data.body.albums.items);
             }
@@ -42,11 +38,7 @@ function Discover() {
         if (!accessToken || !isMounted) return;
 
         spotifyApi.setAccessToken(accessToken);
-        spotifyApi.getFeaturedPlaylists({
-            limit : 5,
-            offset: 0,
-            country : 'ID'
-        }).then(function(data) {
+        spotifyApi.getFeaturedPlaylists().then(function(data) {
             if (isMounted){
                 setPlaylists(data.body.playlists.items);
             }
@@ -64,11 +56,7 @@ function Discover() {
         if (!accessToken || !isMounted) return;
 
         spotifyApi.setAccessToken(accessToken);
-        spotifyApi.getCategories({
-            limit : 5,
-            offset: 0,
-            country: 'ID'
-        }).then(function(data) {
+        spotifyApi.getCategories().then(function(data) {
             if (isMounted) {
                 setCategories(data.body.categories.items);
             }
