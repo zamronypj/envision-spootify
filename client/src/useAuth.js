@@ -16,43 +16,38 @@ export default function useAuth(code) {
     axios
       .post("/login", { code })
       .then((response) => {
-        //   If success then cut the code string from the URL and execute the other thing
-        window.history.pushState({}, null, "/");
-        // console.log(response.data);
-        setAccessToken(response.data.accessToken);
-        setRefreshToken(response.data.refreshToken);
-        setExpiresIn(response.data.expiresIn);
+          //when success,remove any code pramater from url
+          window.history.pushState({}, null, "/");
+          setAccessToken(response.data.accessToken);
+          setRefreshToken(response.data.refreshToken);
+          setExpiresIn(response.data.expiresIn);
       })
       .catch(() => {
-        //   If fail redirect to home page - Login page
-        window.location = "/";
+          //this should redirect to login page
+          window.location = "/";
       });
   }, [code]);
 
 
-  // Update 'accessToken' with the help of 'refreshToken' when 'expireIn' time expires
-  // Because of this user doesnot have to reLogin after(in this case 3600s = 1hr) its accessToken expires because below code will updates accessToken
+  // Update accessToken automatically when it expires
   useEffect(() => {
-    if (!refreshToken || !expiresIn) {
-      return;
-    }
+      if (!refreshToken || !expiresIn) {
+        return;
+      }
 
-    let interval = setInterval(() => {
+      let interval = setInterval(() => {
 
-      axios
-      .post("/refresh", { refreshToken })
-      .then((response) => {
-        // console.log(response.data);
-        setAccessToken(response.data.accessToken);
-        setExpiresIn(response.data.expiresIn);
+      axios.post("/refresh", { refreshToken }).then((response) => {
+          setAccessToken(response.data.accessToken);
+          setExpiresIn(response.data.expiresIn);
       })
       .catch(() => {
-        window.location = "/";
+          window.location = "/";
       });
 
-    }, (expiresIn - 60) * 1000 );   // 1 min before expire Time and multiplying it with 1000 becoz to convert it in miliseconds
+    }, (expiresIn - 60) * 1000 );   //execute 1 min before expire Time
 
-    // This will make sure that if for some reason our refreshtoken or expireTime changes before an actual Refresh then it will clear the interval so that we don't use the incorrect expireTime or refreshtoken
+    // run cleanup
     return () => clearInterval(interval)
 
   }, [refreshToken, expiresIn]);
