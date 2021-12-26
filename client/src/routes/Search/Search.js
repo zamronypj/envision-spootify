@@ -3,11 +3,17 @@ import SearchInput from './components/SearchInput'
 import SearchResult from './components/SearchResult'
 import spotifyApi from '../../common/services/SpotifyApi'
 import { AccessTokenContext } from '../../common/context/AccessTokenContext'
+import useIsMounted from '../../useIsMounted'
 import './_search.scss'
 
 function Search() {
     const [keyword, setKeyword] = useState('')
     const [searchResults, setSearchResults] = useState([])
+
+    //track if component is mounted or not
+    //we need this to avoid setting spotify API result when component is
+    //unmounted to avoid leak
+    const isMounted = useIsMounted();
 
     const accessToken = useContext(AccessTokenContext)
 
@@ -16,18 +22,21 @@ function Search() {
      * multiple endpoint calls.
      */
     const loadSearch = useCallback(() => {
-        if (!accessToken || !keyword) return;
+        if (!accessToken || !isMounted || !keyword) return;
 
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.searchTracks(keyword).then(function(data) {
-            setSearchResults(data.body.tracks.items);
+            if (isMounted) {
+                setSearchResults(data.body.tracks.items);
+            }
         }, function(err) {
             console.log("Something went wrong!", err);
         });
-    }, [accessToken, keyword]);
+    }, [accessToken, keyword, isMounted]);
 
     useEffect(() => {
         loadSearch();
+        return () => {}
     }, [loadSearch])
 
     return (

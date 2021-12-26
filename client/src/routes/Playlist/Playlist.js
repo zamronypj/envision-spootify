@@ -2,26 +2,36 @@ import React, {useState, useContext, useEffect, useCallback} from 'react'
 import { AccessTokenContext } from '../../common/context/AccessTokenContext'
 import spotifyApi from '../../common/services/SpotifyApi'
 import PlaylistBlock from '../../common/components/PlaylistBlock'
+import useIsMounted from '../../useIsMounted'
 
 function Playlist() {
     const [playlists, setPlaylists] = useState([])
+
+    //track if component is mounted or not
+    //we need this to avoid setting spotify API result when component is
+    //unmounted to avoid leak
+    const isMounted = useIsMounted();
+
     const accessToken = useContext(AccessTokenContext)
 
     const loadPlaylists = useCallback(() => {
-        if (!accessToken) return;
+        if (!accessToken || !isMounted) return;
 
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.getFeaturedPlaylists({
             country : 'ID'
         }).then(function(data) {
-            setPlaylists(data.body.playlists.items);
+            if (isMounted) {
+                setPlaylists(data.body.playlists.items);
+            }
         }, function(err) {
             console.log("Something went wrong!", err);
         });
-    }, [accessToken])
+    }, [accessToken, isMounted])
 
     useEffect(() => {
         loadPlaylists()
+        return () => {}
     }, [loadPlaylists])
 
     return (

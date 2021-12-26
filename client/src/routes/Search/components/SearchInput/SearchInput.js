@@ -13,7 +13,7 @@ function SearchInput({keyword, setKeyword}) {
                 value={keyword}
                 onInput={e => setKeyword(e.target.value)}
                 id="header-search"
-                placeholder="Search"
+                placeholder="Search. Try 'love' or 'artist:beatles'"
                 name="keyword"
             />
         </div>

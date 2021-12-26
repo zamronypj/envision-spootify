@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useState, useContext, useCallback } from 'react'
+import React, { useEffect, useState, useContext, useCallback } from 'react'
 import DiscoverBlock from './DiscoverBlock'
 import spotifyApi from '../../common/services/SpotifyApi'
 import { AccessTokenContext } from '../../common/context/AccessTokenContext'
+import useIsMounted from '../../useIsMounted'
 import './_discover.scss'
 
 function Discover() {
@@ -12,7 +13,7 @@ function Discover() {
     //track if component is mounted or not
     //we need this to avoid setting spotify API result when component is
     //unmounted
-    const componentMounted = useRef(true);
+    const isMounted = useIsMounted()
 
     const accessToken = useContext(AccessTokenContext)
 
@@ -21,7 +22,7 @@ function Discover() {
      * multiple endpoint calls
      */
     const loadNewRelease = useCallback(() => {
-        if (!accessToken) return;
+        if (!accessToken || !isMounted) return;
 
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.getNewReleases({
@@ -29,16 +30,16 @@ function Discover() {
             offset: 0,
             country: 'ID',
         }).then(function(data) {
-            if (componentMounted.current) {
+            if (isMounted) {
                 setNewReleases(data.body.albums.items);
             }
         }, function(err) {
             console.log("Something went wrong!", err);
         });
-    }, [accessToken]);
+    }, [accessToken, isMounted]);
 
     const loadPlaylists = useCallback(() => {
-        if (!accessToken) return;
+        if (!accessToken || !isMounted) return;
 
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.getFeaturedPlaylists({
@@ -46,13 +47,13 @@ function Discover() {
             offset: 0,
             country : 'ID'
         }).then(function(data) {
-            if (componentMounted.current){
+            if (isMounted){
                 setPlaylists(data.body.playlists.items);
             }
         }, function(err) {
             console.log("Something went wrong!", err);
         });
-    }, [accessToken])
+    }, [accessToken, isMounted])
 
 
     /**
@@ -60,7 +61,7 @@ function Discover() {
      * multiple endpoint calls
      */
      const loadCategories = useCallback(() => {
-        if (!accessToken) return;
+        if (!accessToken || !isMounted) return;
 
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.getCategories({
@@ -68,23 +69,19 @@ function Discover() {
             offset: 0,
             country: 'ID'
         }).then(function(data) {
-            if (componentMounted.current) {
+            if (isMounted) {
                 setCategories(data.body.categories.items);
             }
         }, function(err) {
             console.log("Something went wrong!", err);
         });
-    }, [accessToken])
+    }, [accessToken, isMounted])
 
     useEffect(() => {
         loadNewRelease();
         loadPlaylists()
         loadCategories()
-
-        return () => {
-            //called when component is unmounted
-            componentMounted.current = false;
-        }
+        return () => {}
     }, [loadNewRelease, loadPlaylists, loadCategories])
 
     return (
