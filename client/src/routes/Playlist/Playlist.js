@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect, useCallback} from 'react'
 import { AccessTokenContext } from '../../common/context/AccessTokenContext'
 import spotifyApi from '../../common/services/SpotifyApi'
-import PlaylistBlock from './components/PlaylistBlock'
+import PlaylistBlock from '../../common/components/PlaylistBlock'
 
 function Playlist() {
     const [playlists, setPlaylists] = useState([])
