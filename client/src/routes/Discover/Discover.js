@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react'
+import React, { useRef, useEffect, useState, useContext, useCallback } from 'react'
 import DiscoverBlock from './DiscoverBlock'
 import spotifyApi from '../../common/services/SpotifyApi'
 import { AccessTokenContext } from '../../common/context/AccessTokenContext'
@@ -8,6 +8,11 @@ function Discover() {
     const [newReleases, setNewReleases] = useState([])
     const [playlists, setPlaylists] = useState([])
     const [categories, setCategories] = useState([])
+
+    //track if component is mounted or not
+    //we need this to avoid setting spotify API result when component is
+    //unmounted
+    const componentMounted = useRef(true);
 
     const accessToken = useContext(AccessTokenContext)
 
@@ -24,7 +29,9 @@ function Discover() {
             offset: 0,
             country: 'ID',
         }).then(function(data) {
-            setNewReleases(data.body.albums.items);
+            if (componentMounted.current) {
+                setNewReleases(data.body.albums.items);
+            }
         }, function(err) {
             console.log("Something went wrong!", err);
         });
@@ -39,7 +46,9 @@ function Discover() {
             offset: 0,
             country : 'ID'
         }).then(function(data) {
-            setPlaylists(data.body.playlists.items);
+            if (componentMounted.current){
+                setPlaylists(data.body.playlists.items);
+            }
         }, function(err) {
             console.log("Something went wrong!", err);
         });
@@ -59,7 +68,9 @@ function Discover() {
             offset: 0,
             country: 'ID'
         }).then(function(data) {
-            setCategories(data.body.categories.items);
+            if (componentMounted.current) {
+                setCategories(data.body.categories.items);
+            }
         }, function(err) {
             console.log("Something went wrong!", err);
         });
@@ -67,15 +78,14 @@ function Discover() {
 
     useEffect(() => {
         loadNewRelease();
-    }, [loadNewRelease])
-
-    useEffect(() => {
         loadPlaylists()
-    }, [loadPlaylists])
-
-    useEffect(() => {
         loadCategories()
-    }, [loadCategories])
+
+        return () => {
+            //called when component is unmounted
+            componentMounted.current = false;
+        }
+    }, [loadNewRelease, loadPlaylists, loadCategories])
 
     return (
         <div className="discover">

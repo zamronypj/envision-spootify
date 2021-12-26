@@ -1,10 +1,16 @@
-import React, {useCallback, useEffect, useState, useContext} from 'react'
+import React, {useRef, useCallback, useEffect, useState, useContext} from 'react'
 import spotifyApi from '../../common/services/SpotifyApi'
 import { AccessTokenContext } from '../../common/context/AccessTokenContext'
 import PlaylistBlock from '../../common/components/PlaylistBlock'
 
 function Favourite() {
     const [favourites, setFavourites] = useState([])
+
+    //track if component is mounted or not
+    //we need this to avoid setting spotify API result when component is
+    //unmounted
+    const componentMounted = useRef(true);
+
     const accessToken = useContext(AccessTokenContext)
 
     /**
@@ -16,7 +22,9 @@ function Favourite() {
 
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.getUserPlaylists().then(function(data) {
-            setFavourites(data.body.items);
+            if (componentMounted.current) {
+                setFavourites(data.body.items);
+            }
         }, function(err) {
             console.log("Something went wrong!", err);
         });
@@ -24,6 +32,9 @@ function Favourite() {
 
     useEffect(() => {
         loadFavourites();
+        return () => {
+            componentMounted.current = false;
+        }
     }, [loadFavourites])
 
     return (
