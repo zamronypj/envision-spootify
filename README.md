@@ -57,14 +57,16 @@ Client application run on browser so NEVER store your client secret.
 
 ## Run application
 
-For client
+### For client
 
 ```
 $ cd envision-spootify/client
 $ npm start
 ```
 
-For server
+### For server
+
+Make sure you have required environment variables properly set as described above.
 
 ```
 $ cd envision-spootify/server
