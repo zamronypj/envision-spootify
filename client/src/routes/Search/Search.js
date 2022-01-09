@@ -49,7 +49,7 @@ function Search() {
         <div className="search-result">
             <h2>Search Tracks</h2>
             <SearchInput keyword={keyword} setKeyword={setKeyword} />
-            <SearchResult text="Search Result" id="search-result" data={searchResults} />
+            <SearchResult link="/track" text="Search Result" id="search-result" data={searchResults} />
         </div>
 
     );

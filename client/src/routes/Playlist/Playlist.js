@@ -43,7 +43,7 @@ function Playlist() {
     return (
         <div className="playlist">
             <h2>Playlist</h2>
-            <PlaylistBlock text="Playlist" id="playlist-result" data={playlists} />
+            <PlaylistBlock link="/playlist" text="Playlist" id="playlist-result" data={playlists} />
         </div>
     );
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import SearchItem from '../../../routes/Search/components/SearchItem';
 import './_playlistblock.scss'
 
-function PlaylistBlock({id, data, imagesKey = 'images' }) {
+function PlaylistBlock({id, data, link, imagesKey = 'images' }) {
 
     return (
         <div className="search-result-block">
@@ -10,7 +10,7 @@ function PlaylistBlock({id, data, imagesKey = 'images' }) {
                 {
                     data && data.length ?
                         data.map(({ [imagesKey] : images, id, name }) => (
-                            <SearchItem key={id} images={images} name={name} />
+                            <SearchItem link={link} id={id} key={id} images={images} name={name} />
                         ))
                     : <div>You do not have any items yet.</div>
                 }

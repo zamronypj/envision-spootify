@@ -1,0 +1,27 @@
+.playlist-result {
+  .animate__animated.animate__fadeIn {
+    --animate-duration: 1.5s;
+  }
+  .mt-sm {
+    margin-top:10px;
+  }
+  .p-xs {
+    padding:5px;
+  }
+
+  .artist-name,
+  .bold {
+      font-weight: bold;
+  }
+  .album-heading {
+      display: flex;
+      .heading-container {
+          padding:20px;
+          img {
+            width:200px;
+          }
+      }
+  }
+}
+
+
