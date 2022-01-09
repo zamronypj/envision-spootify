@@ -7,6 +7,9 @@ const express = require('express')
 const cors = require('cors')
 const spotifyWebApi = require('spotify-web-api-node')
 const app = express()
+const dotenv = require('dotenv')
+
+dotenv.config()
 
 const port = process.env.PORT || 9000;
 
