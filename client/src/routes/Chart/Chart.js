@@ -10,6 +10,8 @@ function Chart() {
     //track if component is mounted or not
     //we need this to avoid setting spotify API result when component is
     //unmounted to avoid leak
+    //proper way is to cancel async API request but spotifyapi lib not
+    //yet provide a way to cancel request
     const isMounted = useIsMounted();
 
     const accessToken = useContext(AccessTokenContext)
@@ -33,7 +35,11 @@ function Chart() {
 
     useEffect(() => {
         loadCharts();
-        return () => {}
+        return () => {
+            //TODO: we should abort getPlaylistsForCategory() here in case
+            //it has not yet completed but spotifyApi lib not yet provide
+            //a way to cancel
+        }
     }, [loadCharts])
 
 

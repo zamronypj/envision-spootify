@@ -13,6 +13,8 @@ function Discover() {
     //track if component is mounted or not
     //we need this to avoid setting spotify API result when component is
     //unmounted
+    //proper way is to cancel async API request but spotifyapi lib not
+    //yet provide a way to cancel request
     const isMounted = useIsMounted()
 
     const accessToken = useContext(AccessTokenContext)
@@ -69,14 +71,18 @@ function Discover() {
         loadNewRelease();
         loadPlaylists()
         loadCategories()
-        return () => {}
+        return () => {
+            //TODO: we should abort all async requests here in case
+            //it has not yet completed but spotifyApi lib not yet provide
+            //a way to cancel
+        }
     }, [loadNewRelease, loadPlaylists, loadCategories])
 
     return (
         <div className="discover">
-            <DiscoverBlock text="RELEASED THIS WEEK" id="released" data={newReleases} />
-            <DiscoverBlock text="FEATURED PLAYLISTS" id="featured" data={playlists} />
-            <DiscoverBlock text="BROWSE" id="browse" data={categories} imagesKey="icons" />
+            <DiscoverBlock type="/album" text="RELEASED THIS WEEK" id="released" data={newReleases} />
+            <DiscoverBlock type="/playlist" text="FEATURED PLAYLISTS" id="featured" data={playlists} />
+            <DiscoverBlock type="/category" text="BROWSE" id="browse" data={categories} imagesKey="icons" />
         </div>
 
     );

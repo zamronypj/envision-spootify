@@ -10,6 +10,8 @@ function Favourite() {
     //track if component is mounted or not
     //we need this to avoid setting spotify API result when component is
     //unmounted to avoid leak
+    //proper way is to cancel async API request but spotifyapi lib not
+    //yet provide a way to cancel request
     const isMounted = useIsMounted();
 
     const accessToken = useContext(AccessTokenContext)
@@ -33,7 +35,11 @@ function Favourite() {
 
     useEffect(() => {
         loadFavourites();
-        return () => {}
+        return () => {
+            //TODO: we should abort getUserPlaylists() here in case
+            //it has not yet completed but spotifyApi lib not yet provide
+            //a way to cancel
+        }
     }, [loadFavourites])
 
     return (

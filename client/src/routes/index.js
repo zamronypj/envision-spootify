@@ -5,6 +5,7 @@ import Search from './Search'
 import Playlist from './Playlist';
 import Chart from './Chart';
 import Favourite from './Favourite';
+import Album from './Album';
 
 export default function AppRoutes() {
     return (
@@ -14,6 +15,7 @@ export default function AppRoutes() {
             <Route exact path='/playlists' element={< Playlist />} />
             <Route exact path='/favourites' element={< Favourite />} />
             <Route exact path='/charts' element={< Chart />} />
+            <Route path='/album/:albumId' element={< Album />} />
         </Routes>
     );
 }

@@ -9,7 +9,9 @@ function Playlist() {
 
     //track if component is mounted or not
     //we need this to avoid setting spotify API result when component is
-    //unmounted to avoid leak
+    //unmounted to avoid leak.
+    //proper way is to cancel async API request but spotifyapi lib not
+    //yet provide a way to cancel request
     const isMounted = useIsMounted();
 
     const accessToken = useContext(AccessTokenContext)
@@ -31,7 +33,11 @@ function Playlist() {
 
     useEffect(() => {
         loadPlaylists()
-        return () => {}
+        return () => {
+            //TODO: we should abort getFeaturedPlaylists() here in case
+            //it has not yet completed but spotifyApi lib not yet provide
+            //a way to cancel
+        }
     }, [loadPlaylists])
 
     return (
